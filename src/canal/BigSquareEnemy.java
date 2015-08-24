@@ -162,7 +162,7 @@ public class BigSquareEnemy extends Enemy {
 					m_chaseLevel = 2;
 				}
 			}
-		} else {
+		} else if (m_chasing) {
 			// 自機は領地内にいるので追うのを止め，追跡情報を初期化する。
 			m_traversingPoints = null;
 			m_routeToTarget = null;
