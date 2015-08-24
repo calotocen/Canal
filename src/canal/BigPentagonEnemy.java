@@ -15,41 +15,61 @@
  */
 package canal;
 
-
+/**
+ * 大五角敵である。
+ */
 public class BigPentagonEnemy extends Enemy {
+	/** 移動位置履歴 */
 	Point m_prePosition[];
 
+	/**
+	 * 大五角敵を生成する。
+	 *
+	 * @param position 初期位置。
+	 */
 	public BigPentagonEnemy(Point position) {
+		// 初期位置に右向きに配置する。
 		super(position, Direction.RIGHT);
+
+		// 速度を 1 に設定する。
 		setSpeed(1);
+
+		// 移動位置履歴を初期化する。
 		m_prePosition = new Point[3];
 		m_prePosition[0] = position;
 		m_prePosition[1] = position;
 		m_prePosition[2] = position;
 	}
 
+	/**
+	 * 移動する。
+	 * 移動は，領地の周囲を沿うように行う。
+	 */
 	public void move() {
 		Point curPosition = getPosition();
 		Territory territory = GameContext.getTerritory();
 
 		for (int i = 0; i < 3; i++) {
 			for (Point point : curPosition.getPointsOnEightSides()) {
+				// 移動先候補が移動位置履歴にある場合，そこへは移動しない。
+				// これにより，同じ場所の往復を防ぐことができる。
+				// 移動履歴のサイズを 3 とするとうまく動作する (経験則)。
 				if (point.equals(m_prePosition[0])) {
 					continue;
 				}
-
 				if (point.equals(m_prePosition[1])) {
 					continue;
 				}
-
 				if (point.equals(m_prePosition[2])) {
 					continue;
 				}
 
+				// 移動先候補が領地内である場合，そこへは移動しない。
 				if (territory.isTerritory(point)) {
 					continue;
 				}
 
+				// 移動先候補が領地に接している場合は，そこを移動先とする。
 				boolean flag = false;
 				for (Point p : point.getPointsOnEightSides()) {
 					if (territory.isTerritory(p)) {
@@ -57,7 +77,6 @@ public class BigPentagonEnemy extends Enemy {
 						break;
 					}
 				}
-
 				if (flag) {
 					m_prePosition[2] = m_prePosition[1];
 					m_prePosition[1] = m_prePosition[0];
@@ -67,6 +86,8 @@ public class BigPentagonEnemy extends Enemy {
 				}
 			}
 
+			// 移動先へ移動する。
+			// 移動先へは確実に移動できるので，移動できたかの確認は行わない。
 			move(Direction.valueOf(m_prePosition[0], curPosition));
 		}
 	}

@@ -26,8 +26,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+/**
+ * リザルト画面である。
+ */
 public class ResultScreen extends Screen {
+	/**
+	 * リザルト画面を生成する。
+	 */
 	public ResultScreen() {
+		// スペースキー押下時にタイトル画面に切り替えるようにする。
 		setOnKeyTyped(event -> {
 			if (event.getCharacter().equals(" ")) {
 				Main.changeScreen(0);
@@ -35,11 +42,13 @@ public class ResultScreen extends Screen {
 		});
 		setFocusTraversable(true);
 
+		// ゲーム情報の最終値を取得する。
 		long score = GameContext.getScore();
 		long lifeBonus = GameContext.getLifeCount() * Configuration.SCORE_PER_LIFE;
 		GameContext.addScore(lifeBonus);
 		long totalScore = GameContext.getScore();
 
+		// ランクを計算する。
 		String rank;
 		if (totalScore >= Configuration.SCORE_BORDER_OF_RANK_S) {
 			rank = "S";
@@ -55,6 +64,7 @@ public class ResultScreen extends Screen {
 			rank = "E";
 		}
 
+		// 画面に表示するテキストを生成する。
 		Text resultCaptionText = createText("CONGRATULATION!!", 100, Color.GREENYELLOW);
 		Text scoreCaptionText = createText("SCORE", 50, Color.GREENYELLOW);
 		Text scoreText = createText(Long.toString(score), "monospace", 50, Color.GREENYELLOW);
@@ -65,6 +75,7 @@ public class ResultScreen extends Screen {
 		Text rankCaptionText = createText("RANK", 50, Color.GREENYELLOW);
 		Text rankText = createText(rank, 50, Color.GREENYELLOW);
 
+		// 区切り線を生成する。
 		VBox[] partitionPanes = new VBox[3];
 		IntStream.range(0, partitionPanes.length).forEach(i -> {
 			partitionPanes[i] = new VBox();
@@ -72,6 +83,7 @@ public class ResultScreen extends Screen {
 			partitionPanes[i].setStyle("-fx-background-color: greenyellow;");
 		});
 
+		// テキスト，および区切り線をグリッドペインに配置する。
 		GridPane gridPane = new GridPane();
 		GridPane.setHalignment(resultCaptionText, HPos.CENTER);
 		GridPane.setHalignment(scoreText, HPos.RIGHT);
@@ -92,10 +104,13 @@ public class ResultScreen extends Screen {
 		gridPane.add(rankText, 1, 6);
 		gridPane.add(partitionPanes[2], 0, 7, 2, 1);
 
+		// グリッドペインをスタックペインに配置する。
+		// こうすることで，グリッドペインが画面の中央に配置される。
 		StackPane stackPane = new StackPane(new Group(gridPane));
 		stackPane.setPrefSize(Configuration.SCREEN_WIDTH, Configuration.SCREEN_HEIGHT);
 		stackPane.setStyle("-fx-background-color: black;");
 
+		// 画面にスタックペインを配置する。
 		getChildren().add(stackPane);
 	}
 

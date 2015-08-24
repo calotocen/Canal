@@ -15,11 +15,24 @@
  */
 package canal;
 
+/**
+ * 三角敵である。
+ */
 public class TriangleEnemy extends Enemy {
+	/**
+	 * 三角敵を生成する。
+	 *
+	 * @param position 初期位置。
+	 */
 	public TriangleEnemy(Point position) {
 		super(position, Direction.DOWN_RIGHT);
 	}
 
+	/**
+	 * 移動する。
+	 * 具体的には，進行方向へまっすぐ移動する。
+	 * 障害物にぶつかったときは，反射するように方向転換する。
+	 */
 	public void move() {
 		boolean moved = move(getDirection());
 		if (!moved) {

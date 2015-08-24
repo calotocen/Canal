@@ -17,25 +17,55 @@ package canal;
 
 import java.util.Collection;
 
+/**
+ * レベル (自機，領地，および敵の初期配置) である。
+ */
 public class Level {
+	/** 自機 */
 	Player m_player;
+
+	/** 領地 */
 	Territory m_territory;
+
+	/** 敵 */
 	Collection<Enemy> m_enemies;
 
+	/**
+	 * レベルを生成する。
+	 *
+	 * @param territory 領地。
+	 * @param player 自機。
+	 * @param enemies 敵。
+	 */
 	public Level(Territory territory, Player player, Collection<Enemy> enemies) {
 		m_player = player;
 		m_territory = territory;
 		m_enemies = enemies;
 	}
 
+	/**
+	 * 自機を返す。
+	 *
+	 * @return 自機。
+	 */
 	public Player getPlayer() {
 		return m_player;
 	}
 
+	/**
+	 * 領地を返す。
+	 *
+	 * @return 領地。
+	 */
 	public Territory getTerritory() {
 		return m_territory;
 	}
 
+	/**
+	 * 敵を返す。
+	 *
+	 * @return 敵。
+	 */
 	public Collection<Enemy> getEnemies() {
 		return m_enemies;
 	}

@@ -20,27 +20,66 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * 画面の基底クラスである。
+ */
 public class Screen extends Pane {
+	/**
+	 * 画面を開始する。
+	 */
 	public void start() {
 		// 何もしない。
 	}
 
+	/**
+	 * 画面を停止する。
+	 */
 	public void stop() {
 		// 何もしない。
 	}
 
+	/**
+	 * テキストノードを生成する。
+	 *
+	 * @param text テキスト。
+	 * @return テキストノード。
+	 */
 	public Text createText(String text) {
 		return createText(text, 15);
 	}
 
+	/**
+	 * テキストノードを生成する。
+	 *
+	 * @param text テキスト。
+	 * @param fontSize フォントサイズ。
+	 * @return テキストノード。
+	 */
 	public Text createText(String text, int fontSize) {
 		return createText(text, fontSize, Color.WHITE);
 	}
 
+	/**
+	 * テキストノードを生成する。
+	 *
+	 * @param text テキスト。
+	 * @param fontSize フォントサイズ。
+	 * @param color フォントカラー。
+	 * @return テキストノード。
+	 */
 	public Text createText(String text, int fontSize, Color color) {
 		return createText(text, "bold-gothic", fontSize, color);
 	}
 
+	/**
+	 * テキストノードを生成する。
+	 *
+	 * @param text テキスト。
+	 * @param fontFamily フォントファミリー。
+	 * @param fontSize フォントサイズ。
+	 * @param color フォントカラー。
+	 * @return テキストノード。
+	 */
 	public Text createText(String text, String fontFamily, int fontSize, Color color) {
 		Text textNode = new Text(text);
 		switch (fontFamily) {

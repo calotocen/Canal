@@ -18,39 +18,70 @@ package canal;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * 敵の基底クラスである。
+ */
 public abstract class Enemy extends Sprite {
+	/** 速度 */
 	private int m_speed;
 
+	/**
+	 * 敵を生成する。
+	 *
+	 * @param position 初期位置。
+	 * @param direction 初期方向。
+	 */
 	public Enemy(Point position, Direction direction) {
 		super(position, direction);
 		m_speed = 1;
 	}
 
+	/**
+	 * 速度を返す。
+	 *
+	 * @return 速度。
+	 */
 	protected int getSpeed() {
 		return m_speed;
 	}
 
+	/**
+	 * 速度を設定する。
+	 *
+	 * @param speed 速度。
+	 */
 	protected void setSpeed(int speed) {
 		m_speed = speed;
 	}
 
+	/**
+	 * 反射方向を返す。
+	 *
+	 * @return 反射方向。
+	 */
 	protected Direction getReflectionDirection() {
 		Direction direction = getDirection();
 		Point curPosition = getPosition();
 		Point newPosition = new Point(curPosition, direction, 1);
 		Territory territory = GameContext.getTerritory();
 
+		// 反射方向の計算は，フィールド外にあるか，領地内にあるときのみ行う。
 		if (Field.contains(newPosition) && !territory.isTerritory(newPosition)) {
 			return Direction.NONE;
 		}
 
+		// 衝突方向を判定する。
 		boolean horizontalCollision = false;
 		boolean verticalCollision = false;
 		if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+			// 水平方向からの衝突である。
 			horizontalCollision = true;
 		} else if (direction == Direction.UP || direction == Direction.DOWN) {
+			// 垂直方向からの衝突である。
 			verticalCollision = true;
 		} else {
+			// 斜め方向の衝突である。
+			// 水平方向と垂直方向について，それぞれ衝突の有無を判定する。
 			if (!Field.containsX(newPosition.getX()) || territory.isTerritory(newPosition.getX(), curPosition.getY())) {
 				horizontalCollision = true;
 			}
@@ -58,6 +89,8 @@ public abstract class Enemy extends Sprite {
 				verticalCollision = true;
 			}
 		}
+
+		// 衝突方向に応じた反射方向を返す。
 		if (horizontalCollision && !verticalCollision) {
 			return direction.getRetrorseX();
 		} else if (!horizontalCollision && verticalCollision) {
@@ -67,10 +100,19 @@ public abstract class Enemy extends Sprite {
 		}
 	}
 
+	/**
+	 * 移動する。
+	 * 移動経路に遠征線があった場合は，遠征線上で止まる。
+	 * 移動先がフィールド外や領地内であった場合は，移動失敗とする。
+	 *
+	 * @param direction 移動方向。
+	 * @return 移動成否。
+	 */
 	protected boolean move(Direction direction) {
 		Point curPosition = getPosition();
 		Optional<Point> newPosition;
 
+		// 進路上に遠征線がある場合は，遠征線まで進める。
 		final ExpeditionLine expeditionLine = GameContext.getExpeditionLine();
 		newPosition = Stream.iterate(curPosition, position -> new Point(position, direction, 1)).limit(m_speed)
 				.filter(position -> expeditionLine != null && expeditionLine.getPoints().contains(position))
@@ -80,6 +122,7 @@ public abstract class Enemy extends Sprite {
 			return true;
 		}
 
+		// フィールド，または領地にぶつかるまで，進める。
 		for (int i = 1; i <= m_speed; i++) {
 			Point position = new Point(curPosition, direction, i);
 			if (!Field.contains(position) || GameContext.getTerritory().isTerritory(position)) {
@@ -92,8 +135,12 @@ public abstract class Enemy extends Sprite {
 			return true;
 		}
 
+		// 指定された方向には，一歩も進めなかった。
 		return false;
 	}
 
+	/**
+	 * 移動する。
+	 */
 	abstract public void move();
 }

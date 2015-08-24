@@ -18,13 +18,29 @@ package canal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * 四角敵を描画するクラスである。
+ */
 public class SquareEnemyDrawer extends SpriteDrawer {
+	/**
+	 * 四角敵描画者を生成する。
+	 *
+	 * @param squareEnemy 大四角敵
+	 */
 	public SquareEnemyDrawer(SquareEnemy squareEnemy) {
 		super(squareEnemy);
 	}
 
+	/**
+	 * 四角敵を描画する。
+	 *
+	 * @param gc 描画先。
+	 */
 	public void draw(GraphicsContext gc) {
+		// 四角敵を取得する。
 		SquareEnemy squareEnemy = (SquareEnemy) getSprite();
+
+		// 追跡レベルに応じて，四角敵の色を変更する。
 		switch (squareEnemy.getChaseLevel()) {
 		case 0:
 			setFill(Color.ROYALBLUE);
@@ -36,6 +52,8 @@ public class SquareEnemyDrawer extends SpriteDrawer {
 			setFill(Color.RED);
 			break;
 		}
+
+		// 四角敵を描画する。
 		drawSquare(gc);
 	}
 }

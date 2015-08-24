@@ -18,12 +18,25 @@ package canal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * 三角敵を描画するクラスである。
+ */
 public class TriangleEnemyDrawer extends SpriteDrawer {
+	/**
+	 * 三角敵描画者を生成する。
+	 *
+	 * @param triangleEnemy 大三角敵
+	 */
 	public TriangleEnemyDrawer(TriangleEnemy triangleEnemy) {
 		super(triangleEnemy);
 		setFill(Color.ORCHID);
 	}
 
+	/**
+	 * 三角敵を描画する。
+	 *
+	 * @param gc 描画先。
+	 */
 	public void draw(GraphicsContext gc) {
 		drawTriangle(gc);
 	}

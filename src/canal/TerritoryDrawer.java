@@ -17,21 +17,37 @@ package canal;
 
 import java.util.stream.IntStream;
 
+/**
+ * 領地を描画するクラスである。
+ */
 public class TerritoryDrawer {
+	/** 領地 */
 	private Territory m_territory;
 
+	/**
+	 * 領地描画者を生成する。
+	 *
+	 * @param territory 大四角敵
+	 */
 	public TerritoryDrawer(Territory territory) {
 		m_territory = territory;
 	}
 
+	/**
+	 * 領地を描画する。
+	 *
+	 * @param argbs 描画先。
+	 * @param width 描画先の横幅。
+	 * @param height 描画先の縦幅。
+	 */
 	public void draw(int[] argbs, int width, int height) {
 		IntStream.range(0, height).forEach(y -> {
 			IntStream.range(0, width).forEach(x -> {
 				if (m_territory.isWall(x, y)) {
-					// 0xff90EE90: Color.LIGHTGREEN
+					// 壁を描画する (0xff90EE90: Color.LIGHTGREEN)。
 					argbs[x + y * width] = 0xff90EE90;
 				} else if (m_territory.isTerritory(x, y)) {
-					// 0xff008000: Color.GREEN
+					// 領地を描画する (0xff008000: Color.GREEN)。
 					argbs[x + y * width] = 0xff008000;
 				}
 			});

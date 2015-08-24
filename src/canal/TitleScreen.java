@@ -19,22 +19,33 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+/**
+ * タイトル画面である。
+ */
 public class TitleScreen extends Screen {
+	/**
+	 * タイトル画面を生成する。
+	 */
 	public TitleScreen() {
+		// スペースキー押下時にタイトル画面に切り替えるようにする。
 		setFocusTraversable(true);
 
+		// 画面に表示するテキストを生成する。
 		Text titleText = createText("Canal", 15, Color.GREENYELLOW);
 
+		// テキストをスタックペインに配置する。
 		StackPane stackPane = new StackPane(titleText);
 		stackPane.setPrefSize(Configuration.SCREEN_WIDTH, Configuration.SCREEN_HEIGHT);
 		stackPane.setStyle("-fx-background-color: black;");
 
+		// スペースキー押下時にタイトル画面に切り替えるようにする。
 		setOnKeyTyped(event -> {
 			if (event.getCharacter().equals(" ")) {
 				Main.startGame();
 			}
 		});
 
+		// 画面にスタックペインを配置する。
 		getChildren().add(stackPane);
 	}
 }

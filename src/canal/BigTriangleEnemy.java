@@ -15,13 +15,29 @@
  */
 package canal;
 
-
+/**
+ * 大三角敵である。
+ */
 public class BigTriangleEnemy extends Enemy {
+	/**
+	 * 大三角敵を生成する。
+	 *
+	 * @param position 初期位置。
+	 */
 	public BigTriangleEnemy(Point position) {
+		// 初期位置に右下向きに配置する。
 		super(position, Direction.DOWN_RIGHT);
+
+		// 速度を 4 に設定する。
 		setSpeed(4);
 	}
 
+	/**
+	 * 移動する。
+	 * 具体的には，進行方向へまっすぐ移動する。
+	 * 障害物にぶつかったときは，反射するように方向転換する。
+	 * ただし，たまに元方向へ戻ることがある。
+	 */
 	public void move() {
 		boolean moved = move(getDirection());
 		if (!moved) {

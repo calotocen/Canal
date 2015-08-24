@@ -18,14 +18,32 @@ package canal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * 自機を描画するクラスである。
+ */
 public class PlayerDrawer extends SpriteDrawer {
+	/**
+	 * 自機描画者を生成する。
+	 *
+	 * @param sprite 自機
+	 */
 	public PlayerDrawer(Sprite sprite) {
 		super(sprite);
 	}
 
+	/**
+	 * 自機を描画する。
+	 *
+	 * @param gc 描画先。
+	 */
 	public void draw(GraphicsContext gc) {
+		// 自機を取得する。
 		Sprite sprite = getSprite();
+
+		// 自機の生存状態に応じて，自機の色を変更する。
 		setFill(sprite.isLive() ? Color.YELLOW : Color.RED);
+
+		// 自機を描画する。
 		drawCircle(gc);
 	}
 }

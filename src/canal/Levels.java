@@ -18,7 +18,16 @@ package canal;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * レベルの集合である。
+ */
 public class Levels {
+	/**
+	 * レベル番号に対応するレベルを返す。
+	 *
+	 * @param level レベル番号。
+	 * @return レベル。
+	 */
 	public static Level get(int level) {
 		Player player = null;
 		Territory territory = null;
@@ -26,6 +35,7 @@ public class Levels {
 
 		switch (level) {
 		case 1:
+			// レベル 1
 			player = new Player(new Point(170, 80));
 			territory = new Territory();
 			territory.addTerritory(new Region(170, 80, 21, 21));
@@ -35,7 +45,9 @@ public class Levels {
 					new TriangleEnemy(new Point(300, 300)),
 			};
 			break;
+
 		case 2:
+			// レベル 2
 			player = new Player(new Point(600, 100));
 			territory = new Territory();
 			territory.addTerritory(new Region(600, 100, 101, 21));
@@ -47,7 +59,9 @@ public class Levels {
 					new SquareEnemy(new Point(300, 100)),
 			};
 			break;
+
 		case 3:
+			// レベル 3
 			player = new Player(new Point(200, 300));
 			territory = new Territory();
 			territory.addTerritory(new Region(200, 300, 101, 21));
@@ -60,7 +74,9 @@ public class Levels {
 					new TriangleEnemy(new Point(400, 400)),
 			};
 			break;
+
 		case 4:
+			// レベル 4
 			player = new Player(new Point(600, 240));
 			territory = new Territory();
 			territory.addTerritory(new Region(600, 240, 21, 61));
@@ -72,7 +88,9 @@ public class Levels {
 					new SquareEnemy(new Point(400, 400)),
 			};
 			break;
+
 		case 5:
+			// レベル 5
 			player = new Player(new Point(350, 170));
 			territory = new Territory();
 			territory.addTerritory(new Region(350, 170, 101, 21));
@@ -91,6 +109,11 @@ public class Levels {
 		return new Level(territory, player, new LinkedList<Enemy>(Arrays.asList(enemies)));
 	}
 
+	/**
+	 * レベルの個数を返す。
+	 *
+	 * @return レベルの個数。
+	 */
 	public static int size() {
 		return 5;
 	}
