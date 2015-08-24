@@ -33,6 +33,12 @@ public class BigSquareEnemy extends Enemy {
 	private static final int LOOP_COUNT = 500;
 
 	/**
+	 * 追跡中フラグ。
+	 * 追跡中の場合は true，それ以外の場合は false。
+	 */
+	private boolean m_chasing;
+
+	/**
 	 * 追跡レベル。値の意味は次の通りである。
 	 * <ul>
 	 *     <li>0 ... 未追跡</li>
@@ -41,9 +47,6 @@ public class BigSquareEnemy extends Enemy {
 	 * </ul>
 	 */
 	private int m_chaseLevel;
-
-	/** 追跡対象初期位置 */
-	private Point m_targetPosition;
 
 	/** 走査対象 */
 	private PriorityQueue<Point> m_traversingPoints;
@@ -67,8 +70,8 @@ public class BigSquareEnemy extends Enemy {
 		setSpeed(2);
 
 		// 追跡情報を初期化する。
+		m_chasing = false;
 		m_chaseLevel = 0;
-		m_targetPosition = null;
 		m_traversingPoints = null;
 		m_routeToTarget = null;
 	}
@@ -110,21 +113,20 @@ public class BigSquareEnemy extends Enemy {
 				m_chaseLevel = 2;
 			} else {
 				// 初回走査時は，追跡情報を初期化する。
-				if (m_targetPosition == null) {
-					// 追跡対象初期位置を設定する。
-					// 追跡対象初期位置は，遠征線起点となる。
-					m_targetPosition = playerPosition;
-
+				if (!m_chasing) {
 					// 走査対象を初期化する。
 					m_traversingPoints = new PriorityQueue<>(
 							Configuration.FIELD_WIDTH * Configuration.FIELD_HEIGHT,
-							(point1, point2) -> Double.compare(m_targetPosition.getDistance(point1), m_targetPosition.getDistance(point2)));
+							(point1, point2) -> Double.compare(playerPosition.getDistance(point1), playerPosition.getDistance(point2)));
 
 					// 遠征線起点への経路を初期化する。
 					m_routeToTarget = new HashMap<>();
 
 					// 走査対象を初期化する。
 					m_traversingPoints.add(playerPosition);
+
+					// 追跡中フラグを『追跡中』に変更する。
+					m_chasing = true;
 				}
 
 				if (!m_routeToTarget.containsKey(curPosition)) {
@@ -164,9 +166,9 @@ public class BigSquareEnemy extends Enemy {
 			}
 		} else {
 			// 自機は領地内にいるので追うのを止め，追跡情報を初期化する。
-			m_targetPosition = null;
 			m_traversingPoints = null;
 			m_routeToTarget = null;
+			m_chasing = false;
 		}
 
 		// 移動する。
