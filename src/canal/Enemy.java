@@ -118,19 +118,15 @@ public abstract class Enemy extends Sprite {
 				.limit(m_speed)
 				.filter(position -> expeditionLine != null && expeditionLine.getPoints().contains(position))
 				.findFirst();
-		if (newPosition.isPresent()) {
-			setDirection(direction);
-			setPosition(newPosition.get());
-			return true;
-		}
-
-		// フィールド，または領地にぶつかるまで，進める。
-		for (int i = 1; i <= m_speed; i++) {
-			Point position = new Point(curPosition, direction, i);
-			if (!Field.contains(position) || GameContext.getTerritory().isTerritory(position)) {
-				break;
+		if (!newPosition.isPresent()) {
+			// フィールド，または領地にぶつかるまで，進める。
+			for (int i = 1; i <= m_speed; i++) {
+				Point position = new Point(curPosition, direction, i);
+				if (!Field.contains(position) || GameContext.getTerritory().isTerritory(position)) {
+					break;
+				}
+				newPosition = Optional.of(position);
 			}
-			newPosition = Optional.of(position);
 		}
 		if (newPosition.isPresent()) {
 			setDirection(direction);
