@@ -114,7 +114,8 @@ public abstract class Enemy extends Sprite {
 
 		// 進路上に遠征線がある場合は，遠征線まで進める。
 		final ExpeditionLine expeditionLine = GameContext.getExpeditionLine();
-		newPosition = Stream.iterate(curPosition, position -> new Point(position, direction, 1)).limit(m_speed)
+		newPosition = Stream.iterate(curPosition, position -> new Point(position, direction, 1))
+				.limit(m_speed)
 				.filter(position -> expeditionLine != null && expeditionLine.getPoints().contains(position))
 				.findFirst();
 		if (newPosition.isPresent()) {
