@@ -37,7 +37,7 @@ public class Level {
 	 * @param player 自機。
 	 * @param enemies 敵。
 	 */
-	public Level(Territory territory, Player player, Collection<Enemy> enemies) {
+	public Level(Player player, Territory territory, Collection<Enemy> enemies) {
 		m_player = player;
 		m_territory = territory;
 		m_enemies = enemies;

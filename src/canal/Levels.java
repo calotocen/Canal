@@ -106,7 +106,7 @@ public class Levels {
 			break;
 		}
 
-		return new Level(territory, player, new LinkedList<Enemy>(Arrays.asList(enemies)));
+		return new Level(player, territory, new LinkedList<Enemy>(Arrays.asList(enemies)));
 	}
 
 	/**
