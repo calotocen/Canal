@@ -186,24 +186,6 @@ public enum Direction {
 	}
 
 	/**
-	 * 横成分のみの方向を返す。
-	 *
-	 * @return 横成分のみの方向。
-	 */
-	public Direction getTransverseComponent() {
-		return valueOf(m_x, 0);
-	}
-
-	/**
-	 * 縦成分のみの方向を返す。
-	 *
-	 * @return 縦成分のみの方向。
-	 */
-	public Direction getLongitudinalComponent() {
-		return valueOf(0, m_y);
-	}
-
-	/**
 	 * 方向の角度をラジアンで返す。
 	 * 角度は，上方向を基点とした時計回りで表現する。
 	 *
