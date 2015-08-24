@@ -36,7 +36,7 @@ public class Main extends Application {
 	 * @param stage アプリケーションのプライマリステージ。
 	 */
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		// ルートペイン，およびシーンを生成する。
 		st_root = new Group();
 		Scene scene = new Scene(st_root);
