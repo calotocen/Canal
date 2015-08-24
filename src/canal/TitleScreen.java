@@ -28,6 +28,12 @@ public class TitleScreen extends Screen {
 	 */
 	public TitleScreen() {
 		// スペースキー押下時にタイトル画面に切り替えるようにする。
+		setOnKeyTyped(event -> {
+			// KeyTyped イベントの場合は KeyCode を得られないので，Character で判定する。
+			if (event.getCharacter().equals(" ")) {
+				Main.startGame();
+			}
+		});
 		setFocusTraversable(true);
 
 		// 画面に表示するテキストを生成する。
@@ -37,13 +43,6 @@ public class TitleScreen extends Screen {
 		StackPane stackPane = new StackPane(titleText);
 		stackPane.setPrefSize(Configuration.SCREEN_WIDTH, Configuration.SCREEN_HEIGHT);
 		stackPane.setStyle("-fx-background-color: black;");
-
-		// スペースキー押下時にタイトル画面に切り替えるようにする。
-		setOnKeyTyped(event -> {
-			if (event.getCharacter().equals(" ")) {
-				Main.startGame();
-			}
-		});
 
 		// 画面にスタックペインを配置する。
 		getChildren().add(stackPane);

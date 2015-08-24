@@ -36,6 +36,7 @@ public class ResultScreen extends Screen {
 	public ResultScreen() {
 		// スペースキー押下時にタイトル画面に切り替えるようにする。
 		setOnKeyTyped(event -> {
+			// KeyTyped イベントの場合は KeyCode を得られないので，Character で判定する。
 			if (event.getCharacter().equals(" ")) {
 				Main.changeScreen(0);
 			}
