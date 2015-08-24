@@ -116,10 +116,8 @@ public class Player extends Sprite {
 				//                                                指定された方向にある領地壁へ移動する。
 				if (expeditionLine != null) {
 					// 遠征する。
-					// 遠征線が交差することはないため，必ず成功する。
-					if (!expeditionLine.forward(direction)) {
-						return;
-					}
+					// 壁にたどり着いたときに遠征線が交差することはないため，必ず成功する。
+					expeditionLine.forward(direction);
 
 					// 遠征線の起点以外の場所が終点であった場合，
 					// 遠征線で囲んだ領域を領地化する。
