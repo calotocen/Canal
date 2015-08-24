@@ -20,7 +20,7 @@ package canal;
  */
 public class ExpeditionLineDrawer {
 	/** 遠征線 */
-	ExpeditionLine m_expeditionLine;
+	private ExpeditionLine m_expeditionLine;
 
 	/**
 	 * 遠征線描画者を生成する。

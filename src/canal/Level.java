@@ -22,13 +22,13 @@ import java.util.Collection;
  */
 public class Level {
 	/** 自機 */
-	Player m_player;
+	private Player m_player;
 
 	/** 領地 */
-	Territory m_territory;
+	private Territory m_territory;
 
 	/** 敵 */
-	Collection<Enemy> m_enemies;
+	private Collection<Enemy> m_enemies;
 
 	/**
 	 * レベルを生成する。

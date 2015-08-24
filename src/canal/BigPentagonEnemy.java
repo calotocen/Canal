@@ -20,7 +20,7 @@ package canal;
  */
 public class BigPentagonEnemy extends Enemy {
 	/** 移動位置履歴 */
-	Point m_prePosition[];
+	private Point m_prePosition[];
 
 	/**
 	 * 大五角敵を生成する。

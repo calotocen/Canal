@@ -28,22 +28,22 @@ import javafx.scene.paint.Paint;
  */
 public abstract class SpriteDrawer {
 	/** 三角形の横座標 */
-	static EnumMap<Direction, double[]> st_triangleXs = new EnumMap<>(Direction.class);
+	private static EnumMap<Direction, double[]> st_triangleXs = new EnumMap<>(Direction.class);
 
 	/** 三角形の縦座標 */
-	static EnumMap<Direction, double[]> st_triangleYs = new EnumMap<>(Direction.class);
+	private static EnumMap<Direction, double[]> st_triangleYs = new EnumMap<>(Direction.class);
 
 	/** 四角形の横座標 */
-	static EnumMap<Direction, double[]> st_squareXs = new EnumMap<>(Direction.class);
+	private static EnumMap<Direction, double[]> st_squareXs = new EnumMap<>(Direction.class);
 
 	/** 四角形の縦座標 */
-	static EnumMap<Direction, double[]> st_squareYs = new EnumMap<>(Direction.class);
+	private static EnumMap<Direction, double[]> st_squareYs = new EnumMap<>(Direction.class);
 
 	/** 五角形の横座標 */
-	static EnumMap<Direction, double[]> st_pentagonXs = new EnumMap<>(Direction.class);
+	private static EnumMap<Direction, double[]> st_pentagonXs = new EnumMap<>(Direction.class);
 
 	/** 五角形の縦座標 */
-	static EnumMap<Direction, double[]> st_pentagonYs = new EnumMap<>(Direction.class);
+	private static EnumMap<Direction, double[]> st_pentagonYs = new EnumMap<>(Direction.class);
 
 	/** スプライト */
 	private Sprite m_sprite;
