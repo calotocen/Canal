@@ -25,6 +25,13 @@ import javafx.scene.text.Text;
  */
 public class Screen extends Pane {
 	/**
+	 * 画面を生成する。
+	 */
+	public Screen() {
+		// 何もしない。
+	}
+
+	/**
 	 * 画面を開始する。
 	 */
 	public void start() {
