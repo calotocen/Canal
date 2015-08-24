@@ -86,6 +86,7 @@ public class Screen extends Pane {
 		case "bold-gothic":
 			textNode.setFont(new Font("Impact", fontSize));
 			break;
+
 		default:
 			textNode.setStyle("-fx-font-family: " + fontFamily + "; -fx-font-size: " + fontSize + ";");
 			break;

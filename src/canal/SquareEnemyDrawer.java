@@ -45,9 +45,11 @@ public class SquareEnemyDrawer extends SpriteDrawer {
 		case 0:
 			setFill(Color.ROYALBLUE);
 			break;
+
 		case 1:
 			setFill(Color.MEDIUMVIOLETRED);
 			break;
+
 		case 2:
 			setFill(Color.RED);
 			break;

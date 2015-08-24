@@ -264,7 +264,7 @@ public class Territory {
 	}
 
 	/**
-	 * 領地上のすべての点に対して操作を実行する。
+	 * フィールド上のすべての点に対して操作を実行する。
 	 *
 	 * @param consumer 操作。
 	 */
@@ -323,6 +323,7 @@ public class Territory {
 				}
 				m_size++;
 				break;
+
 			case WALL:
 				// 領地外に接していない場合は，状態を領地内に変更する。
 				if (checkAll(point.getPointsOnEightSides(), s -> (s != State.WILDERNESS && s != State.OUTSIDE))) {
@@ -330,6 +331,7 @@ public class Territory {
 				}
 				m_size++;
 				break;
+
 			case ENCLOSURE:
 				// 領地外に接している場合は状態を壁に，接していない場合は状態を領地内に変更する。
 				if (checkAny(point.getPointsOnEightSides(), s -> (s == State.WILDERNESS || s == State.OUTSIDE))) {
@@ -339,6 +341,7 @@ public class Territory {
 				}
 				m_size++;
 				break;
+
 			default:
 				// 何もしない。
 			}
