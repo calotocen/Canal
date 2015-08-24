@@ -34,10 +34,11 @@ public class TriangleEnemy extends Enemy {
 	 * 障害物にぶつかったときは，反射するように方向転換する。
 	 */
 	public void move() {
-		boolean moved = move(getDirection());
+		Direction movingDirection = getDirection();
+		boolean moved = move(movingDirection);
 		if (!moved) {
-			setDirection(getReflectionDirection());
-			move(getDirection());
+			movingDirection = getReflectionDirection();
+			move(movingDirection);
 		}
 	}
 }

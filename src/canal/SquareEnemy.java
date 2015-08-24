@@ -60,8 +60,13 @@ public class SquareEnemy extends Enemy {
 	 * なお，障害物にぶつかったときは，ランダムに向きを変える。
 	 */
 	public void move() {
+		// 進行方向を初期化する。
+		Direction movingDirection = getDirection();
+
+		// 追跡レベルを初期化する。
 		m_chaseLevel = 0;
 
+		// 遠征中の場合は，自機の追跡を試みる。
 		ExpeditionLine expeditionLine = GameContext.getExpeditionLine();
 		if (expeditionLine != null) {
 			Point position = getPosition();
@@ -73,20 +78,19 @@ public class SquareEnemy extends Enemy {
 				.limit(Math.max(Math.abs(position.getX() - playerPosition.getX()), Math.abs(position.getY() - playerPosition.getY())))
 				.allMatch(point -> !GameContext.getTerritory().isTerritory(point));
 			if (chase) {
-				setDirection(Direction.valueOf(getPosition(), GameContext.getPlayer().getPosition()));
+				movingDirection = Direction.valueOf(getPosition(), GameContext.getPlayer().getPosition());
 				m_chaseLevel = 2;
 			}
 		}
 
 		// 移動する。
 		// 移動に失敗した場合は，ランダムに向きを変えて移動可能な方向へ移動する。
-		boolean moved = move(getDirection());
+		boolean moved = move(movingDirection);
 		if (!moved) {
 			LinkedList<Direction> directions = new LinkedList<>(Arrays.asList(Direction.valuesOfSlantingFourDirection()));
 			Collections.shuffle(directions);
 			for (Direction direction : directions) {
 				if (move(direction)) {
-					setDirection(direction);
 					break;
 				}
 			}

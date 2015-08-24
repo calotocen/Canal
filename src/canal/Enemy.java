@@ -118,6 +118,7 @@ public abstract class Enemy extends Sprite {
 				.filter(position -> expeditionLine != null && expeditionLine.getPoints().contains(position))
 				.findFirst();
 		if (newPosition.isPresent()) {
+			setDirection(direction);
 			setPosition(newPosition.get());
 			return true;
 		}
@@ -131,6 +132,7 @@ public abstract class Enemy extends Sprite {
 			newPosition = Optional.of(position);
 		}
 		if (newPosition.isPresent()) {
+			setDirection(direction);
 			setPosition(newPosition.get());
 			return true;
 		}

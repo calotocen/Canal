@@ -92,8 +92,13 @@ public class BigSquareEnemy extends Enemy {
 	 * なお，障害物にぶつかったときは，ランダムに向きを変える。
 	 */
 	public void move() {
+		// 進行方向を初期化する。
+		Direction movingDirection = getDirection();
+
+		// 追跡レベルを初期化する。
 		m_chaseLevel = 0;
 
+		// 遠征中か否か，追跡中か否かに対応した処理を行う。
 		ExpeditionLine expeditionLine = GameContext.getExpeditionLine();
 		if (expeditionLine != null) {
 			Point curPosition = getPosition();
@@ -109,7 +114,7 @@ public class BigSquareEnemy extends Enemy {
 			// 領地がある場合は，迂回路を走査する。
 			if (chaseDirectly) {
 				// 移動方向を自機がいる方向に変更し，追跡レベルを『追跡 (経路発見済)』に変更する。
-				setDirection(Direction.valueOf(curPosition, playerPosition));
+				movingDirection = Direction.valueOf(curPosition, playerPosition);
 				m_chaseLevel = 2;
 			} else {
 				// 初回走査時は，追跡情報を初期化する。
@@ -154,11 +159,11 @@ public class BigSquareEnemy extends Enemy {
 				if (!m_routeToTarget.containsKey(curPosition)) {
 					// 遠征線起点への経路が見つからなかったので，
 					// とりあえず，自機に近づく方向へ移動する。
-					setDirection(Direction.valueOf(curPosition, playerPosition));
+					movingDirection = Direction.valueOf(curPosition, playerPosition);
 					m_chaseLevel = 1;
 				} else {
 					// 遠征線起点への経路が見つかったので，その方向へ移動する。
-					setDirection(Direction.valueOf(curPosition, m_routeToTarget.get(curPosition)));
+					movingDirection = Direction.valueOf(curPosition, m_routeToTarget.get(curPosition));
 					m_chaseLevel = 2;
 				}
 			}
@@ -171,13 +176,12 @@ public class BigSquareEnemy extends Enemy {
 
 		// 移動する。
 		// 移動に失敗した場合は，ランダムに向きを変えて移動可能な方向へ移動する。
-		boolean moved = move(getDirection());
+		boolean moved = move(movingDirection);
 		if (!moved) {
 			LinkedList<Direction> directions = new LinkedList<>(Arrays.asList(Direction.valuesOfSlantingFourDirection()));
 			Collections.shuffle(directions);
 			for (Direction direction : directions) {
 				if (move(direction)) {
-					setDirection(direction);
 					break;
 				}
 			}

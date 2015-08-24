@@ -39,14 +39,15 @@ public class BigTriangleEnemy extends Enemy {
 	 * ただし，たまに元方向へ戻ることがある。
 	 */
 	public void move() {
-		boolean moved = move(getDirection());
+		Direction movingDirection = getDirection();
+		boolean moved = move(movingDirection);
 		if (!moved) {
 			if (Math.random() < 0.9) {
-				setDirection(getReflectionDirection());
+				movingDirection = getReflectionDirection();
 			} else {
-				setDirection(getDirection().getRetrorse());
+				movingDirection = getDirection().getRetrorse();
 			}
-			move(getDirection());
+			move(movingDirection);
 		}
 	}
 }
