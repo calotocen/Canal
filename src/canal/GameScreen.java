@@ -300,7 +300,7 @@ public class GameScreen extends Screen {
 		if (expeditionLine != null) {
 			// 遠征線上にある敵を探す。
 			Optional<Enemy> optionalEnemy = GameContext.getEnemies().stream()
-					.filter(e -> expeditionLine.getPoints().contains(e.getPosition()))
+					.filter(enemy -> expeditionLine.getPoints().contains(enemy.getPosition()))
 					.findFirst();
 
 			// 遠征線上に敵があった場合は，自機，および遠征線の状態を『撃墜』に変更する。

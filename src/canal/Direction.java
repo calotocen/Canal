@@ -71,15 +71,15 @@ public enum Direction {
 	/**
 	 * 基点から対象への方向を返す。
 	 *
-	 * @param curPoint 基点となる位置。
-	 * @param newPoint 対象位置。
+	 * @param basePoint 基点となる位置。
+	 * @param targetPoint 対象位置。
 	 * @return 基点から対象に向かうための方向。
 	 */
-	public static Direction valueOf(Point curPoint, Point newPoint) {
+	public static Direction valueOf(Point basePoint, Point targetPoint) {
 		// 基点と対象の位置関係を計算する。
 		// 斜め 45 度以外の斜め方向にあった場合は，方向を丸める。
-		int x = (int) Math.signum(newPoint.getX() - curPoint.getX());
-		int y = (int) Math.signum(newPoint.getY() - curPoint.getY());
+		int x = (int) Math.signum(targetPoint.getX() - basePoint.getX());
+		int y = (int) Math.signum(targetPoint.getY() - basePoint.getY());
 		return valueOf(x, y);
 	}
 
