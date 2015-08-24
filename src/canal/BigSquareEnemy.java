@@ -118,12 +118,10 @@ public class BigSquareEnemy extends Enemy {
 					m_traversingPoints = new PriorityQueue<>(
 							Configuration.FIELD_WIDTH * Configuration.FIELD_HEIGHT,
 							(point1, point2) -> Double.compare(playerPosition.getDistance(point1), playerPosition.getDistance(point2)));
+					m_traversingPoints.add(playerPosition);
 
 					// 遠征線起点への経路を初期化する。
 					m_routeToTarget = new HashMap<>();
-
-					// 走査対象を初期化する。
-					m_traversingPoints.add(playerPosition);
 
 					// 追跡中フラグを『追跡中』に変更する。
 					m_chasing = true;
