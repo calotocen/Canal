@@ -17,6 +17,8 @@ package canal;
 
 import static canal.GameContext.State.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +34,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.WritablePixelFormat;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -85,6 +87,9 @@ public class GameScreen extends Screen {
 
 	/** キャンバス用ビットマップ */
 	private int[] m_argbs;
+
+	/** キャンバス用ビットマップ */
+	private byte[] m_pixels;
 
 	/** 押下キーマップ */
 	private HashSet<KeyCode> m_pressedKeys;
@@ -231,6 +236,7 @@ public class GameScreen extends Screen {
 
 		// キャンバス用ビットマップを初期化する。
 		m_argbs = new int[Configuration.FIELD_WIDTH * Configuration.FIELD_HEIGHT];
+		m_pixels = new byte[Configuration.FIELD_WIDTH * Configuration.FIELD_HEIGHT * 4];
 	}
 
 	/**
@@ -494,9 +500,44 @@ public class GameScreen extends Screen {
 		// 領地を描画する。
 		m_territoryDrawer.draw(m_argbs, width, height);
 
-		// キャンバス用ビットマップをキャンバスに反映する。
+		// キャンバスのグラフィックスコンテキストを取得する。
 		GraphicsContext gc = m_canvas.getGraphicsContext2D();
-		gc.getPixelWriter().setPixels(0, 0, width, height, WritablePixelFormat.getIntArgbPreInstance(), m_argbs, 0, width);
+
+		// キャンバス用ビットマップをキャンバスに反映する。
+		// 本来であれば，下記のように PixelWriter.setPixels メソッドを実行すればよい。
+		// ---
+		//     gc.getPixelWriter().setPixels(0, 0, width, height, WritablePixelFormat.getIntArgbPreInstance(), m_argbs, 0, width);
+		// ---
+		//
+		// しかし，setPixels メソッドは内部で width * height * 4 の大きさを持つ byte[] を new する。
+		// このため，本処理のような頻繁に実行されるメソッド内で使用すると，メモリ使用量過多となる。
+		// (ガベージコレクションによるメモリ領域の回収が間に合わず，フル GC が実行されてしまう)。
+		// 上記問題を解決するため，private メソッドである PixelWriter.writePixelBuffer メソッドを直接実行するようにする。
+		try {
+			for (int i = 0, j = 0; i < width * height; i++) {
+				m_pixels[j++] = (byte) (m_argbs[i]);
+				m_pixels[j++] = (byte) (m_argbs[i] >> 8);
+				m_pixels[j++] = (byte) (m_argbs[i] >> 16);
+				m_pixels[j++] = (byte) (m_argbs[i] >> 24);
+			}
+
+			PixelWriter pixelWriter = gc.getPixelWriter();
+			Method writePixelBufferMethod = pixelWriter.getClass().getDeclaredMethod("writePixelBuffer", int.class, int.class, int.class, int.class, byte[].class);
+			writePixelBufferMethod.setAccessible(true);
+			writePixelBufferMethod.invoke(pixelWriter, 0, 0, width, height, m_pixels);
+		} catch (NoSuchMethodException exception) {
+			// 通常，発生しない。
+			return;
+		} catch (IllegalAccessException exception) {
+			// 通常，発生しない。
+			return;
+		} catch (IllegalArgumentException exception) {
+			// 通常，発生しない。
+			return;
+		} catch (InvocationTargetException exception) {
+			// 通常，発生しない。
+			return;
+		}
 
 		// スプライトを描画する。
 		m_spriteDrawers.values().forEach(spriteDrawer -> spriteDrawer.draw(gc));
