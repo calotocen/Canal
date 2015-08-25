@@ -13,16 +13,16 @@ Canal
 
 ## 使い方
 
-[Canal.jar][https://github.com/calotocen/Canal/blob/master/Canal.jar]をダブルクリックで実行します。
+[Canal.jar](https://github.com/calotocen/Canal/blob/master/Canal.jar)をダブルクリックで実行します。
 
 ## インストール
 
 インストーラは，ありません。
-適当なディレクトリに[Canal.jar][https://github.com/calotocen/Canal/blob/master/Canal.jar]を格納してください。
+適当なディレクトリに[Canal.jar](https://github.com/calotocen/Canal/blob/master/Canal.jar)を格納してください。
 
 ## ライセンス
 
-ライセンスは，[MIT](https://github.com/calotocen/Canal/blob/master/LICENSE)です。
+ライセンスは，[Apache License Version 2.0](https://github.com/calotocen/Canal/blob/master/LICENSE)です。
 
 ## 作者
 
